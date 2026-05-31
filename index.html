@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The M-E CEO System — Product Document</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=Outfit:wght@400;500;600&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0C0C0C;
+  --paper:#F6F3EE;
+  --gold:#C09A3E;
+  --gold-light:#F5E9C8;
+  --gold-dark:#8A6B22;
+  --muted:#888;
+  --border:rgba(12,12,12,0.1);
+  --w1:#1E3A14;--w1l:#ECF5E6;--w1m:#2D5016;
+  --w2:#0F2744;--w2l:#E3EDF8;--w2m:#1A3A5C;
+  --w3:#3D0F22;--w3l:#F8E3EA;--w3m:#5C1A2E;
+  --w4:#231440;--w4l:#EDE6F8;--w4m:#3A1A5C;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Outfit',sans-serif;
+  font-size:15px;
+  line-height:1.7;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  background:rgba(246,243,238,0.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  z-index:100;
+  padding:0 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:52px;
+}
+.nav-brand{
+  font-family:'Syne',sans-serif;
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:-0.3px;
+  color:var(--ink);
+}
+.nav-links{
+  display:flex;gap:4px;
+  list-style:none;
+}
+.nav-links a{
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--muted);
+  text-decoration:none;
+  padding:5px 10px;
+  border-radius:6px;
+  transition:all 0.15s;
+}
+.nav-links a:hover{background:var(--ink);color:var(--paper)}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  background:var(--ink);
+  display:flex;flex-direction:column;
+  justify-content:flex-end;
+  padding:80px 40px 60px;
+  position:relative;
+  overflow:hidden;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(192,154,62,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(192,154,62,0.04) 1px, transparent 1px);
+  background-size:60px 60px;
+}
+.hero-circle{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(192,154,62,0.12);
+}
+.hero-eyebrow{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:3px;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:20px;
+  opacity:0.8;
+}
+.hero-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(52px,10vw,96px);
+  font-weight:800;
+  color:#F6F3EE;
+  line-height:0.92;
+  letter-spacing:-2px;
+  margin-bottom:8px;
+}
+.hero-title span{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;
+  font-weight:400;
+  color:var(--gold);
+}
+.hero-sub{
+  font-size:18px;
+  color:rgba(246,243,238,0.4);
+  margin-bottom:48px;
+  font-weight:400;
+  max-width:500px;
+  line-height:1.5;
+}
+.hero-stats{
+  display:flex;gap:40px;
+  border-top:1px solid rgba(246,243,238,0.08);
+  padding-top:32px;
+}
+.stat-val{
+  font-family:'Syne',sans-serif;
+  font-size:28px;
+  font-weight:800;
+  color:#F6F3EE;
+  line-height:1;
+  margin-bottom:4px;
+}
+.stat-label{
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:2px;
+  color:rgba(246,243,238,0.3);
+  text-transform:uppercase;
+}
+
+/* ── SECTIONS ── */
+section{padding:80px 40px;max-width:900px;margin:0 auto}
+.section-eyebrow{
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:3px;
+  color:var(--gold-dark);
+  text-transform:uppercase;
+  margin-bottom:14px;
+  font-weight:500;
+}
+.section-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(32px,5vw,48px);
+  font-weight:800;
+  line-height:1.05;
+  letter-spacing:-1px;
+  margin-bottom:24px;
+}
+.section-lead{
+  font-size:18px;
+  color:rgba(12,12,12,0.6);
+  max-width:600px;
+  line-height:1.7;
+  margin-bottom:40px;
+}
+
+/* ── DIVIDER ── */
+.section-divider{
+  height:1px;
+  background:var(--border);
+  max-width:900px;
+  margin:0 auto;
+}
+
+/* ── PRODUCT OVERVIEW ── */
+.product-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin-bottom:40px;
+}
+.product-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:24px;
+}
+.product-card.full{grid-column:1/-1}
+.product-card.gold{
+  background:var(--ink);
+  border-color:var(--gold);
+}
+.card-label{
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+.card-label.light{color:rgba(246,243,238,0.35)}
+.card-value{
+  font-family:'Syne',sans-serif;
+  font-size:22px;
+  font-weight:800;
+  line-height:1.2;
+  margin-bottom:8px;
+}
+.card-value.light{color:#F6F3EE}
+.card-desc{font-size:14px;color:var(--muted);line-height:1.6}
+.card-desc.light{color:rgba(246,243,238,0.45)}
+
+.promise-box{
+  background:var(--gold-light);
+  border:1px solid var(--gold);
+  border-radius:16px;
+  padding:28px;
+  margin-bottom:24px;
+}
+.promise-label{
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:2px;
+  color:var(--gold-dark);
+  text-transform:uppercase;
+  margin-bottom:12px;
+}
+.promise-text{
+  font-family:'Instrument Serif',serif;
+  font-size:22px;
+  line-height:1.5;
+  color:var(--ink);
+  font-style:italic;
+}
+
+/* ── AVATAR ── */
+.avatar-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.avatar-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:24px;
+}
+.avatar-card.dark{
+  background:var(--ink);
+  border-color:transparent;
+  grid-column:1/-1;
+}
+.avatar-quote{
+  font-family:'Instrument Serif',serif;
+  font-size:20px;
+  font-style:italic;
+  color:#F6F3EE;
+  line-height:1.5;
+  margin-bottom:12px;
+}
+.avatar-quote-attr{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:rgba(246,243,238,0.35);
+  letter-spacing:1px;
+}
+.trait-list{list-style:none;margin-top:12px}
+.trait-list li{
+  font-size:14px;
+  color:rgba(12,12,12,0.7);
+  padding:7px 0;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-start;gap:10px;
+  line-height:1.5;
+}
+.trait-list li:last-child{border-bottom:none}
+.trait-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--gold);flex-shrink:0;margin-top:6px;
+}
+
+/* ── DELIVERY ── */
+.delivery-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  margin-bottom:32px;
+}
+.delivery-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:22px;
+  text-align:center;
+}
+.delivery-icon{font-size:28px;margin-bottom:12px}
+.delivery-title{
+  font-family:'Syne',sans-serif;
+  font-size:15px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+.delivery-body{font-size:13px;color:var(--muted);line-height:1.6}
+
+.week-schedule{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+}
+.schedule-row{
+  display:flex;align-items:center;
+  padding:16px 24px;
+  border-bottom:1px solid var(--border);
+  gap:16px;
+}
+.schedule-row:last-child{border-bottom:none}
+.schedule-week{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:1.5px;
+  color:var(--muted);
+  text-transform:uppercase;
+  width:70px;flex-shrink:0;
+}
+.schedule-calls{
+  font-family:'Syne',sans-serif;
+  font-size:18px;
+  font-weight:800;
+  width:140px;flex-shrink:0;
+}
+.schedule-desc{font-size:14px;color:var(--muted)}
+
+/* ── QUEST ARC ── */
+.quest-strip{
+  background:var(--ink);
+  border-radius:20px;
+  padding:36px;
+  margin-bottom:40px;
+  position:relative;
+  overflow:hidden;
+}
+.quest-strip::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(192,154,62,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(192,154,62,0.05) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.quest-nodes{
+  display:flex;align-items:flex-start;
+  gap:0;position:relative;z-index:1;
+}
+.quest-node{flex:1;text-align:center;position:relative}
+.quest-node::after{
+  content:'';position:absolute;
+  top:20px;left:50%;width:100%;height:1px;
+  background:linear-gradient(to right,rgba(192,154,62,0.5),rgba(192,154,62,0.1));
+}
+.quest-node:last-child::after{display:none}
+.q-icon{
+  width:40px;height:40px;border-radius:50%;
+  border:2px solid var(--gold);
+  background:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 10px;font-size:16px;
+  position:relative;z-index:1;
+}
+.q-day{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:1px;margin-bottom:4px}
+.q-name{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:#F6F3EE;line-height:1.3}
+.q-type{font-family:'DM Mono',monospace;font-size:9px;color:rgba(246,243,238,0.3);margin-top:3px}
+
+/* ── WEEKS ── */
+.weeks-section{padding:80px 0;max-width:900px;margin:0 auto;padding-left:40px;padding-right:40px}
+
+.week-block{
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:24px;
+  border:1px solid var(--border);
+}
+.week-block-header{
+  display:flex;align-items:flex-start;
+  padding:28px;
+  cursor:pointer;
+  gap:20px;
+}
+.week-number-badge{
+  width:52px;height:52px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;
+  font-size:20px;font-weight:800;
+  flex-shrink:0;
+}
+.week-block-meta{flex:1}
+.week-block-label{
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:4px;opacity:0.6;
+}
+.week-block-title{
+  font-family:'Syne',sans-serif;font-size:24px;font-weight:800;margin-bottom:4px;
+}
+.week-block-theme{font-size:14px;color:var(--muted);line-height:1.5;max-width:480px}
+.week-toggle{
+  font-size:20px;color:var(--muted);
+  transition:transform 0.2s;flex-shrink:0;margin-top:4px;
+}
+.week-block.open .week-toggle{transform:rotate(180deg)}
+
+.week-days{
+  display:none;
+  border-top:1px solid var(--border);
+}
+.week-block.open .week-days{display:block}
+
+.day-row{
+  display:flex;align-items:flex-start;
+  padding:18px 28px;
+  border-bottom:1px solid var(--border);
+  gap:16px;
+  cursor:pointer;
+  transition:background 0.15s;
+}
+.day-row:last-child{border-bottom:none}
+.day-row:hover{background:rgba(12,12,12,0.02)}
+.day-row.milestone-row{background:var(--gold-light);border-left:3px solid var(--gold)}
+
+.day-num{
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:var(--muted);width:36px;flex-shrink:0;margin-top:2px;
+}
+.day-content{flex:1;min-width:0}
+.day-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:3px}
+.day-focus{font-size:13px;color:var(--muted);margin-bottom:0}
+.day-detail{
+  display:none;margin-top:12px;
+  background:rgba(12,12,12,0.03);border-radius:10px;
+  padding:14px 16px;
+}
+.day-row.open .day-detail{display:block}
+.detail-label{
+  font-family:'DM Mono',monospace;font-size:8px;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:6px;margin-top:12px;
+}
+.detail-label:first-child{margin-top:0}
+.detail-text{font-size:13px;color:rgba(12,12,12,0.7);line-height:1.7}
+.complete-pill{
+  font-size:12px;color:rgba(12,12,12,0.55);line-height:1.6;
+  font-style:italic;
+  border-left:2px solid var(--gold);padding-left:10px;margin-top:4px;
+}
+.day-time{
+  font-family:'DM Mono',monospace;font-size:10px;
+  color:var(--muted);flex-shrink:0;margin-top:3px;white-space:nowrap;
+}
+.conquest-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--gold);color:var(--ink);
+  padding:4px 10px;border-radius:20px;
+  font-family:'Syne',sans-serif;font-size:10px;font-weight:800;
+  margin-top:6px;letter-spacing:0.3px;
+}
+
+/* ── VALUE EQUATION ── */
+.value-eq-hero{
+  background:var(--ink);
+  border-radius:20px;
+  padding:40px;
+  margin-bottom:24px;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.value-eq-hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(192,154,62,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(192,154,62,0.06) 1px,transparent 1px);
+  background-size:50px 50px;
+}
+.formula{
+  font-family:'DM Mono',monospace;
+  font-size:clamp(11px,3vw,18px);
+  color:rgba(246,243,238,0.5);
+  margin-bottom:16px;
+  position:relative;z-index:1;
+  letter-spacing:-0.5px;
+}
+.formula span{color:var(--gold)}
+.elevator-pitch{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(16px,3vw,22px);
+  font-style:italic;
+  color:#F6F3EE;
+  line-height:1.5;
+  max-width:620px;
+  margin:0 auto;
+  position:relative;z-index:1;
+}
+
+.ve-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+.ve-card{
+  background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;
+}
+.ve-card-header{
+  padding:20px 22px 16px;
+  border-bottom:1px solid var(--border);
+}
+.ve-fraction{
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:6px;
+}
+.ve-fraction.top{color:#2D5016}
+.ve-fraction.bottom{color:#5C1A2E}
+.ve-var-name{
+  font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:4px;
+}
+.ve-score{
+  display:inline-flex;align-items:center;gap:6px;
+}
+.score-bar{
+  height:6px;border-radius:3px;background:rgba(12,12,12,0.08);
+  width:80px;overflow:hidden;
+}
+.score-fill{height:100%;border-radius:3px;background:var(--gold)}
+.score-num{
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--gold-dark);font-weight:500;
+}
+.ve-card-body{padding:20px 22px}
+.ve-detail{font-size:13px;color:rgba(12,12,12,0.7);line-height:1.7;margin-bottom:10px}
+.ve-detail:last-child{margin-bottom:0}
+.ve-bullet{
+  display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:rgba(12,12,12,0.7);line-height:1.6;
+}
+.ve-bullet .dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:6px}
+
+.guarantee-box{
+  background:var(--ink);border-radius:16px;padding:28px;
+  display:flex;gap:20px;align-items:flex-start;
+  grid-column:1/-1;
+}
+.guarantee-icon{font-size:36px;flex-shrink:0}
+.guarantee-title{
+  font-family:'Syne',sans-serif;font-size:18px;font-weight:800;
+  color:#F6F3EE;margin-bottom:8px;
+}
+.guarantee-text{font-size:14px;color:rgba(246,243,238,0.5);line-height:1.7}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--ink);padding:48px 40px;text-align:center;
+}
+.footer-brand{
+  font-family:'Syne',sans-serif;font-size:32px;font-weight:800;
+  color:#F6F3EE;margin-bottom:8px;letter-spacing:-1px;
+}
+.footer-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;opacity:0.7}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  section,.weeks-section{padding:60px 20px}
+  nav{padding:0 16px}
+  .nav-links{display:none}
+  .hero{padding:80px 20px 48px}
+  .hero-stats{gap:24px;flex-wrap:wrap}
+  .product-grid,.avatar-layout,.delivery-grid,.ve-grid{grid-template-columns:1fr}
+  .product-card.full,.avatar-card.dark,.guarantee-box{grid-column:1}
+  .hero-title{font-size:48px}
+  .week-block-header{padding:20px}
+  .day-row{padding:14px 20px}
+  .quest-name{font-size:10px}
+  footer{padding:36px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">M-E CEO System</div>
+  <ul class="nav-links">
+    <li><a href="#product">Product</a></li>
+    <li><a href="#avatar">Avatar</a></li>
+    <li><a href="#delivery">Delivery</a></li>
+    <li><a href="#weeks">The 30 Days</a></li>
+    <li><a href="#value">Value Equation</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-grid"></div>
+  <div class="hero-circle" style="width:400px;height:400px;top:-100px;right:-100px"></div>
+  <div class="hero-circle" style="width:220px;height:220px;top:20px;right:20px"></div>
+  <div class="hero-eyebrow">Marketing FM · Product Document · 2026</div>
+  <h1 class="hero-title">The M-E<br><span>CEO</span><br>System</h1>
+  <p class="hero-sub">From side hustle you can't explain to a real business you know how to run — in 30 days.</p>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-val">30</div>
+      <div class="stat-label">Days</div>
+    </div>
+    <div>
+      <div class="stat-val">4,500</div>
+      <div class="stat-label">KSh Price</div>
+    </div>
+    <div>
+      <div class="stat-val">5K</div>
+      <div class="stat-label">KSh Stranger Sales</div>
+    </div>
+    <div>
+      <div class="stat-val">100%</div>
+      <div class="stat-label">Money-Back</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT -->
+<section id="product">
+  <div class="section-eyebrow">01 — The Product</div>
+  <h2 class="section-title">What it is</h2>
+  <p class="section-lead">M-E CEO stands for Marketing is Everything CEO — rooted in Philip Kotler's philosophy that marketing is not a department, it is the business. The aspiration is that by Day 30, the client thinks and operates as a Marketing-first CEO.</p>
+
+  <div class="promise-box">
+    <div class="promise-label">The Promise</div>
+    <div class="promise-text">"In 30 days, you go from a side hustle you can't explain to a real business you know how to run — and you make your first KSh 5,000 from complete strangers online."</div>
+  </div>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="card-label">Format</div>
+      <div class="card-value">Done-With-You</div>
+      <div class="card-desc">Not a video library. Not a self-paced course. Karl is actively present — daily in Week 1, three times a week in Weeks 2–4. The client never figures it out alone.</div>
+    </div>
+    <div class="product-card">
+      <div class="card-label">Operating Environment</div>
+      <div class="card-value">Notion Workspace</div>
+      <div class="card-desc">Every session, assignment, and output lives in Notion. The client keeps the workspace permanently after Day 30 — it becomes their business operating system.</div>
+    </div>
+    <div class="product-card gold">
+      <div class="card-label light">Price</div>
+      <div class="card-value light">KSh 4,500</div>
+      <div class="card-desc light">One price. No hidden tiers. Covered by a full money-back guarantee if the client completes every session and does not make their first KSh 5,000 from strangers by Day 30.</div>
+    </div>
+    <div class="product-card">
+      <div class="card-label">Duration</div>
+      <div class="card-value">30 Days</div>
+      <div class="card-desc">Four structured weeks with a clear theme each — Clarity, Structure, Customers, Systems. Short enough to commit to. Long enough to produce something real.</div>
+    </div>
+    <div class="product-card full">
+      <div class="card-label">What the client has on Day 30</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+        <div class="ve-bullet"><div class="dot"></div>A named, branded business identity</div>
+        <div class="ve-bullet"><div class="dot"></div>A written offer — what they sell, who for, what it costs</div>
+        <div class="ve-bullet"><div class="dot"></div>A price they say without apologising</div>
+        <div class="ve-bullet"><div class="dot"></div>A payment policy clients have signed</div>
+        <div class="ve-bullet"><div class="dot"></div>An active Instagram and TikTok presence</div>
+        <div class="ve-bullet"><div class="dot"></div>A Notion workspace running their business</div>
+        <div class="ve-bullet"><div class="dot"></div>Their first KSh 5,000 from strangers online</div>
+        <div class="ve-bullet"><div class="dot"></div>The identity: <em>I finally know what I'm doing</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- AVATAR -->
+<section id="avatar">
+  <div class="section-eyebrow">02 — The Avatar</div>
+  <h2 class="section-title">Who it's for</h2>
+  <p class="section-lead">The Side Hustle Hobbyist. Not the pure beginner with no business. Not the established SME owner. The person in between — who has been running something for 3–12 months, has made real money, but it still feels like a hobby.</p>
+
+  <div class="avatar-layout">
+    <div class="avatar-card dark" style="grid-column:1/-1">
+      <div class="avatar-quote">"I want to stop being a hobbyist and become an actual entrepreneur and make money even for future use."</div>
+      <div class="avatar-quote-attr">— Real words from Karl's first client, before buying</div>
+    </div>
+    <div class="avatar-card">
+      <div class="card-label">Who they are</div>
+      <ul class="trait-list">
+        <li><div class="trait-dot"></div>Running one or more side hustles — sometimes overlapping</li>
+        <li><div class="trait-dot"></div>3–12 months in, has made real money</li>
+        <li><div class="trait-dot"></div>Has not separated business money from personal</li>
+        <li><div class="trait-dot"></div>Only sells to people they already know</li>
+        <li><div class="trait-dot"></div>Late-paying clients are a recurring problem</li>
+        <li><div class="trait-dot"></div>Inconsistent revenue — no system behind it</li>
+        <li><div class="trait-dot"></div>Burns energy, sees little structural growth</li>
+      </ul>
+    </div>
+    <div class="avatar-card">
+      <div class="card-label">Their language</div>
+      <ul class="trait-list">
+        <li><div class="trait-dot"></div><em>"I'm the issue"</em></li>
+        <li><div class="trait-dot"></div><em>"Activity vs productivity"</em></li>
+        <li><div class="trait-dot"></div><em>"I can only sell to people I know"</em></li>
+        <li><div class="trait-dot"></div><em>"My clients always pay late"</em></li>
+        <li><div class="trait-dot"></div><em>"I make money but don't know where it goes"</em></li>
+        <li><div class="trait-dot"></div><em>"I keep starting and stopping"</em></li>
+        <li><div class="trait-dot"></div><em>"This still doesn't feel like a real business"</em></li>
+      </ul>
+    </div>
+    <div class="avatar-card" style="grid-column:1/-1;background:var(--gold-light);border-color:var(--gold)">
+      <div class="card-label" style="color:var(--gold-dark)">Why Karl can serve this person</div>
+      <div style="font-size:15px;line-height:1.7;color:rgba(12,12,12,0.75)">Karl lost KSh 78,000 to a network marketing venture that promised to teach him business, handed him sales tutorials, and left him alone. The M-E CEO System is the exact opposite of that experience — structured, hand-held, system-first. Karl is not serving a stranger. He is serving a younger version of himself. That is not marketing. That is the reason the product exists.</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- DELIVERY -->
+<section id="delivery">
+  <div class="section-eyebrow">03 — Delivery</div>
+  <h2 class="section-title">How it works</h2>
+  <p class="section-lead">Three channels, one mechanism. Karl is the mechanism. The Notion workspace is the environment. WhatsApp is the safety net. The client never goes more than 24 hours without access to Karl.</p>
+
+  <div class="delivery-grid">
+    <div class="delivery-card">
+      <div class="delivery-icon">📞</div>
+      <div class="delivery-title">Live Calls</div>
+      <div class="delivery-body">Daily in Week 1 (30–45 min each). Three per week in Weeks 2–4. Where trust is built, assignments are reviewed, and blockers get cleared in real time.</div>
+    </div>
+    <div class="delivery-card">
+      <div class="delivery-icon">💬</div>
+      <div class="delivery-title">WhatsApp</div>
+      <div class="delivery-body">Open throughout all 30 days. Texts, voice notes, quick check-ins, assignment reviews. No client sits alone in discomfort long enough to quit.</div>
+    </div>
+    <div class="delivery-card">
+      <div class="delivery-icon">📋</div>
+      <div class="delivery-title">Notion Workspace</div>
+      <div class="delivery-body">The operating environment. Every session, assignment, and output lives here. The client keeps it permanently after Day 30 — it becomes their business OS.</div>
+    </div>
+  </div>
+
+  <div class="week-schedule">
+    <div class="schedule-row" style="background:rgba(12,12,12,0.03)">
+      <div class="schedule-week" style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--ink)">Period</div>
+      <div class="schedule-calls" style="font-size:13px;color:var(--muted);font-family:'Outfit',sans-serif;font-weight:500">Call Frequency</div>
+      <div class="schedule-desc" style="font-size:13px;color:var(--muted);font-weight:600">Focus</div>
+    </div>
+    <div class="schedule-row">
+      <div class="schedule-week">Week 1</div>
+      <div class="schedule-calls">Daily <span style="font-size:12px;color:var(--muted);font-family:'DM Mono',monospace">(7 calls)</span></div>
+      <div class="schedule-desc">High touch. Trust is built here. Momentum is set here. No one starts alone.</div>
+    </div>
+    <div class="schedule-row">
+      <div class="schedule-week">Week 2</div>
+      <div class="schedule-calls">3× week <span style="font-size:12px;color:var(--muted);font-family:'DM Mono',monospace">(3 calls)</span></div>
+      <div class="schedule-desc">Structure is installed. WhatsApp fills the gaps between calls.</div>
+    </div>
+    <div class="schedule-row">
+      <div class="schedule-week">Week 3</div>
+      <div class="schedule-calls">3× week <span style="font-size:12px;color:var(--muted);font-family:'DM Mono',monospace">(3 calls)</span></div>
+      <div class="schedule-desc">Cold outreach is active. Karl debriefs every send and every response.</div>
+    </div>
+    <div class="schedule-row">
+      <div class="schedule-week">Week 4</div>
+      <div class="schedule-calls">3× week <span style="font-size:12px;color:var(--muted);font-family:'DM Mono',monospace">(3 calls)</span></div>
+      <div class="schedule-desc">Systems are installed. Final session is a 60-minute full review and verdict.</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- QUEST ARC STRIP -->
+<div class="weeks-section">
+  <div class="section-eyebrow">04 — The 30 Days</div>
+  <h2 class="section-title">The Quest Arc</h2>
+  <p class="section-lead">Four milestone moments across 30 days. Each one is a different type of win — emotional, identity, clarity, and financial. Each one is also a content moment for Karl.</p>
+
+  <div class="quest-strip">
+    <div class="quest-nodes">
+      <div class="quest-node">
+        <div class="q-day">Day 1</div>
+        <div class="q-icon">🗺️</div>
+        <div class="q-name">The Quest Begins</div>
+        <div class="q-type">Emotional Win</div>
+      </div>
+      <div class="quest-node">
+        <div class="q-day">Day 3</div>
+        <div class="q-icon">⚔️</div>
+        <div class="q-name">The Blank Conquest</div>
+        <div class="q-type">Identity Win</div>
+      </div>
+      <div class="quest-node">
+        <div class="q-day">Day 7</div>
+        <div class="q-icon">👁️</div>
+        <div class="q-name">The Vision Conquest</div>
+        <div class="q-type">Clarity Win</div>
+      </div>
+      <div class="quest-node">
+        <div class="q-day">Day 30</div>
+        <div class="q-icon">👑</div>
+        <div class="q-name">M-E CEO Conquest</div>
+        <div class="q-type">Financial Win</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 1 -->
+  <div class="week-block" id="week1" style="border-color:var(--w1m)">
+    <div class="week-block-header" onclick="toggleWeek('week1')">
+      <div class="week-number-badge" style="background:var(--w1l);color:var(--w1m)">W1</div>
+      <div class="week-block-meta">
+        <div class="week-block-label" style="color:var(--w1m)">Week One · Days 1–7</div>
+        <div class="week-block-title">Clarity</div>
+        <div class="week-block-theme">Face what you have honestly. Name it. See it. Nobody leaves Week 1 confused about what their business is.</div>
+      </div>
+      <div class="week-toggle">▾</div>
+    </div>
+    <div class="week-days">
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 1</div>
+        <div class="day-content">
+          <div class="day-title">The Debrief</div>
+          <div class="day-focus">Prior Season Debrief — extracting real intelligence from hustle history</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Map everything from the last 3–12 months. Revenue, what sold, what didn't, who bought, what was hard. No editing, no narrative. Just the facts.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">45 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">You've listed at least 3 things that worked and 3 that didn't — with evidence, not feelings.</div>
+            <div class="detail-label">The Win</div>
+            <div class="detail-text">🎯 Emotional — Relief. "Your chaos is data, not failure."</div>
+          </div>
+        </div>
+        <div class="day-time">45 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 2</div>
+        <div class="day-content">
+          <div class="day-title">The Identity Shift</div>
+          <div class="day-focus">EMT Identity Audit — Technician vs Manager vs Entrepreneur</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Score yourself honestly across the three roles. Where do you spend most of your time now? Where should you be spending it? Commit in writing to one shift.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">30 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">You've identified which role dominates your hustle and written one sentence about where you need to move.</div>
+          </div>
+        </div>
+        <div class="day-time">30 min</div>
+      </div>
+      <div class="day-row milestone-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 3</div>
+        <div class="day-content">
+          <div class="day-title">The Blank</div>
+          <div class="day-focus">Business Naming Exercise — the business becomes a real entity in the world</div>
+          <div class="conquest-badge">⚔️ THE BLANK CONQUEST</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Name the business. Choose one colour. One visual direction. This is not a homework task — this is a founding moment. The business stops living in your head.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">60 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">You have a business name you can say without quotation marks, one colour, one font direction. Karl has confirmed them.</div>
+            <div class="detail-label">The Win</div>
+            <div class="detail-text">⚔️ Identity — The blank page where your business used to not exist is gone.</div>
+          </div>
+        </div>
+        <div class="day-time">60 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 4</div>
+        <div class="day-content">
+          <div class="day-title">The One Sentence</div>
+          <div class="day-focus">Business Description — telling a stranger exactly what you do</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Write a sentence that tells a stranger: what you do, who you do it for, and what changes for them. No jargon. No "sort of." No "kind of."</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">30 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">You can say it to Karl out loud without adding qualifiers. Karl can repeat it back accurately.</div>
+          </div>
+        </div>
+        <div class="day-time">30 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 5</div>
+        <div class="day-content">
+          <div class="day-title">The Buyer</div>
+          <div class="day-focus">Customer Avatar — who actually buys from you</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Describe your best current or potential customer in specific detail. Not demographics — behaviour. What do they say, where are they, what do they want, what are they afraid of?</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">45 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">You've described one real or ideal person in enough detail that Karl could recognise them if they walked into the room.</div>
+          </div>
+        </div>
+        <div class="day-time">45 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 6</div>
+        <div class="day-content">
+          <div class="day-title">The Price</div>
+          <div class="day-focus">Pricing — setting a number you can defend without apologising</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Set your price. Write the number. Record a 30-second voice note to Karl saying the price out loud and explaining why — not higher, not lower.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">30 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">The voice note is sent. You did not say "I think" or "maybe" before the number.</div>
+          </div>
+        </div>
+        <div class="day-time">30 min</div>
+      </div>
+      <div class="day-row milestone-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 7</div>
+        <div class="day-content">
+          <div class="day-title">The Vision Conquest</div>
+          <div class="day-focus">Week 1 Close — the full picture comes together in one live session</div>
+          <div class="conquest-badge">👁️ THE VISION CONQUEST</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Deliver your one-sentence pitch to Karl live on today's call. Then answer four questions without notes: What is your business? Who is it for? What does it cost? How does someone buy?</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">45-minute call</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">All four questions answered without notes. Karl confirms the picture is clear.</div>
+            <div class="detail-label">The Win</div>
+            <div class="detail-text">👁️ Clarity — You can now see what you have.</div>
+          </div>
+        </div>
+        <div class="day-time">45 min</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="week-block" id="week2" style="border-color:var(--w2m)">
+    <div class="week-block-header" onclick="toggleWeek('week2')">
+      <div class="week-number-badge" style="background:var(--w2l);color:var(--w2m)">W2</div>
+      <div class="week-block-meta">
+        <div class="week-block-label" style="color:var(--w2m)">Week Two · Days 8–14</div>
+        <div class="week-block-title">Structure</div>
+        <div class="week-block-theme">Build the bones. The business stops being a feeling and starts being a system you can see and touch.</div>
+      </div>
+      <div class="week-toggle">▾</div>
+    </div>
+    <div class="week-days">
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 8</div>
+        <div class="day-content">
+          <div class="day-title">The Money Separation</div>
+          <div class="day-focus">Financial Foundations — separating business money from personal money</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Open a separate M-PESA till or business account today. Set the rule. Move whatever business money is currently mixed with personal into it.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">30 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">A separate account exists. Business money is in it. Karl has seen the confirmation.</div>
+          </div>
+        </div>
+        <div class="day-time">30 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 9</div>
+        <div class="day-content">
+          <div class="day-title">The Policy</div>
+          <div class="day-focus">Payment Policy Document — create it, prepare to enforce it</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Write a one-page payment policy. What are your terms? What happens when someone pays late? What payment methods do you accept? Write it as if your next client will sign it.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">45 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">Karl can read the document and it answers all three questions clearly. You've committed to sending it to your next client before work begins.</div>
+          </div>
+        </div>
+        <div class="day-time">45 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 10</div>
+        <div class="day-content">
+          <div class="day-title">The Brand</div>
+          <div class="day-focus">Brand Identity Starter — logo, colour, and visual presence via Canva</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Open Canva. Build one logo option, one WhatsApp Business profile image, one simple business card. One colour. Your name. No more than two fonts. Simple wins.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">60 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">Three files are saved and ready to use. Karl has confirmed they represent the business clearly.</div>
+          </div>
+        </div>
+        <div class="day-time">60 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 11</div>
+        <div class="day-content">
+          <div class="day-title">The Numbers Habit</div>
+          <div class="day-focus">Daily Revenue Tracking — the CEO's most important daily habit</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Set up your tracking sheet in Notion. Enter today's revenue — even if it's zero. Set a daily recurring reminder. This runs every day from here forward.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">20 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">The sheet is set up, today is entered, and the daily reminder is confirmed active.</div>
+          </div>
+        </div>
+        <div class="day-time">20 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 12</div>
+        <div class="day-content">
+          <div class="day-title">The Offer on Paper</div>
+          <div class="day-focus">Offer Packaging — writing your offer so it sells without you</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Write your offer as if you are not there to explain it. Name, price, what's included, what happens after payment, how to buy. A stranger should be able to read it and buy.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">45 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">Karl can read it without asking a single clarifying question.</div>
+          </div>
+        </div>
+        <div class="day-time">45 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 13</div>
+        <div class="day-content">
+          <div class="day-title">The Sales Channel</div>
+          <div class="day-focus">WhatsApp Business Setup — your primary sales tool built properly</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Set up WhatsApp Business fully — profile photo, bio with your one-sentence description, catalogue with your offer listed, quick reply for first enquiries.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">45 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">Karl can find your WhatsApp Business and understand what you sell without asking you anything.</div>
+          </div>
+        </div>
+        <div class="day-time">45 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 14</div>
+        <div class="day-content">
+          <div class="day-title">Week 2 Review</div>
+          <div class="day-focus">Structure Audit — is the business real yet?</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Answer 5 questions honestly: Separate business account? Offer written down? Brand findable? Revenue tracked this week? Payment policy exists? Any 'no' becomes the Week 3 priority.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">30 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">All five answers are yes. Every 'no' has a plan attached.</div>
+          </div>
+        </div>
+        <div class="day-time">30 min</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 3 -->
+  <div class="week-block" id="week3" style="border-color:var(--w3m)">
+    <div class="week-block-header" onclick="toggleWeek('week3')">
+      <div class="week-number-badge" style="background:var(--w3l);color:var(--w3m)">W3</div>
+      <div class="week-block-meta">
+        <div class="week-block-label" style="color:var(--w3m)">Week Three · Days 15–21</div>
+        <div class="week-block-title">Customers</div>
+        <div class="week-block-theme">Break out of your social circle. The milestone is one sale to a complete stranger. Not ten. One.</div>
+      </div>
+      <div class="week-toggle">▾</div>
+    </div>
+    <div class="week-days">
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 15</div>
+        <div class="day-content">
+          <div class="day-title">The Instagram Foundation</div>
+          <div class="day-focus">Instagram Setup Protocol — building a real presence from zero</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Set up or fully reset your Instagram business account. Logo, bio with one-sentence description and how to buy, one pinned post explaining what you do.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">60 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">Karl lands on your page cold and understands what you do and how to reach you in under 30 seconds — without asking you anything.</div>
+          </div>
+        </div>
+        <div class="day-time">60 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 16</div>
+        <div class="day-content">
+          <div class="day-title">The TikTok Foundation</div>
+          <div class="day-focus">TikTok Setup — your first video is live today</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Set up TikTok Business. Same profile photo and bio as Instagram. Record and post your first video — 30 seconds, what your business does and who it's for. Phone and good light. Not perfect. Live.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">60 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">The video is live. Karl has watched it. You did not delete it.</div>
+          </div>
+        </div>
+        <div class="day-time">60 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 17</div>
+        <div class="day-content">
+          <div class="day-title">The Content Map</div>
+          <div class="day-focus">Content Foundation — three types of content you can produce consistently</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Map three content types: shows your work, teaches your customer something, shows who you are. List three specific ideas for each — nine ideas total.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">45 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">Nine ideas are written. Karl has approved at least six as relevant to your buyer.</div>
+          </div>
+        </div>
+        <div class="day-time">45 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 18</div>
+        <div class="day-content">
+          <div class="day-title">The Cold Prep</div>
+          <div class="day-focus">First Cold Market Entry Preparation — the messages are written before they're sent</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Identify three people or places where your ideal customer exists — not in your phone contacts. Write the exact message you'll send to each tomorrow. Karl reads and approves before you send.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">45 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">Three messages are written, Karl has approved them, and you know who you're sending them to tomorrow.</div>
+          </div>
+        </div>
+        <div class="day-time">45 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 19</div>
+        <div class="day-content">
+          <div class="day-title">The Cold Send</div>
+          <div class="day-focus">First Cold Market Entry — the messages go out today</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Send all three messages before the call today. Do not edit them. Do not wait for the perfect moment. Send them. Then join the call and debrief with Karl.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">30 min + call</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">Screenshots of all three sent messages are shared with Karl before the call starts.</div>
+          </div>
+        </div>
+        <div class="day-time">30 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 20</div>
+        <div class="day-content">
+          <div class="day-title">The Follow-Up</div>
+          <div class="day-focus">Handling Responses — keeping conversations alive</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Respond to every reply from Day 19. If no replies came, send three more messages to three new strangers. Document every conversation — what was said, what happened, what you learned.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">30 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">Every response has a reply. Every conversation is still open. Documentation shared with Karl.</div>
+          </div>
+        </div>
+        <div class="day-time">30 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 21</div>
+        <div class="day-content">
+          <div class="day-title">Week 3 Review</div>
+          <div class="day-focus">Cold Market Audit — did we reach a stranger?</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Count: messages sent, responses received, conversations opened, sales or near-sales. Write one learning per unconverted conversation. What changes in Week 4?</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">30 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">You have the numbers and at least one documented learning per unconverted conversation.</div>
+          </div>
+        </div>
+        <div class="day-time">30 min</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 4 -->
+  <div class="week-block" id="week4" style="border-color:var(--w4m)">
+    <div class="week-block-header" onclick="toggleWeek('week4')">
+      <div class="week-number-badge" style="background:var(--w4l);color:var(--w4m)">W4</div>
+      <div class="week-block-meta">
+        <div class="week-block-label" style="color:var(--w4m)">Week Four · Days 22–30</div>
+        <div class="week-block-title">Systems</div>
+        <div class="week-block-theme">Make the business run even when you don't feel like it. Install the CEO — not just the identity, the habits.</div>
+      </div>
+      <div class="week-toggle">▾</div>
+    </div>
+    <div class="week-days">
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 22</div>
+        <div class="day-content">
+          <div class="day-title">The Consistency System</div>
+          <div class="day-focus">What runs when you don't feel like it</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Design your minimum viable business week. Three non-negotiable actions every week — regardless of mood, sales, or life. Write them. Commit to Karl. Set recurring reminders.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">45 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">Three non-negotiables are written, sent to Karl, and reminders are confirmed active.</div>
+          </div>
+        </div>
+        <div class="day-time">45 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 23</div>
+        <div class="day-content">
+          <div class="day-title">The Weekly Review Ritual</div>
+          <div class="day-focus">The CEO's most important recurring habit</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Design your weekly review template. Revenue, content posted, new customers reached, outstanding payments. Set a recurring 30-minute block every Sunday in your calendar.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">30 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">Your weekly review template is built in Notion and the recurring Sunday block is confirmed.</div>
+          </div>
+        </div>
+        <div class="day-time">30 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 24</div>
+        <div class="day-content">
+          <div class="day-title">The Scorecard</div>
+          <div class="day-focus">30-Day Scorecard — measuring what actually happened</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Review numbers from all 30 days: revenue total, customers reached, stranger sales, content published, payment policy used. Score each. Name your one biggest gap.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">45 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">Your scorecard is complete and your one biggest gap is named with a plan to close it.</div>
+          </div>
+        </div>
+        <div class="day-time">45 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 25</div>
+        <div class="day-content">
+          <div class="day-title">The Customer Experience</div>
+          <div class="day-focus">What happens after someone buys — every single time</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Map the full journey from payment to delivery to follow-up. Write it as a checklist. This checklist runs every time someone buys — not just when you remember.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">45 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">The checklist exists in Notion and Karl can follow it without your verbal explanation.</div>
+          </div>
+        </div>
+        <div class="day-time">45 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 26</div>
+        <div class="day-content">
+          <div class="day-title">The Referral Trigger</div>
+          <div class="day-focus">Turning one happy customer into two</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Design a simple referral ask. At what point do you ask a happy customer to refer someone? Write the exact script. Identify one current customer you'll send it to this week.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">30 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">The referral script is written and you've sent it to at least one real customer before the call.</div>
+          </div>
+        </div>
+        <div class="day-time">30 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 27</div>
+        <div class="day-content">
+          <div class="day-title">The Operating System</div>
+          <div class="day-focus">Notion Business OS — the final setup</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Review your full Notion workspace. Is the business running from here or still from your head? Fill every gap. Zero placeholders survive today.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">60 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">Every section of the Notion workspace has real content from your actual business. Zero placeholders remain.</div>
+          </div>
+        </div>
+        <div class="day-time">60 min</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 28</div>
+        <div class="day-content">
+          <div class="day-title">The Gap Day</div>
+          <div class="day-focus">Catch up, strengthen, complete — nothing unfinished survives today</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Review every session from Days 1–27. Identify incomplete outputs or assignments with gaps. Close every open loop. This is not a rest day — it is a completion day.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">Open — however long it takes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">There are no incomplete outputs from the previous 27 days. Karl has confirmed.</div>
+          </div>
+        </div>
+        <div class="day-time">Open</div>
+      </div>
+      <div class="day-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 29</div>
+        <div class="day-content">
+          <div class="day-title">The CEO Letter</div>
+          <div class="day-focus">Writing to your future self</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Write a letter to yourself 6 months from now. Where are you right now? What did these 30 days build? What do you commit to protecting? What do you want to have achieved when you re-read this?</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">30 minutes</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">The letter is written, dated, and saved in your Notion workspace. Karl has read it.</div>
+          </div>
+        </div>
+        <div class="day-time">30 min</div>
+      </div>
+      <div class="day-row milestone-row" onclick="toggleDay(this)">
+        <div class="day-num">Day 30</div>
+        <div class="day-content">
+          <div class="day-title">The M-E CEO Conquest</div>
+          <div class="day-focus">The Final Session — the verdict</div>
+          <div class="conquest-badge">👑 THE M-E CEO CONQUEST</div>
+          <div class="day-detail">
+            <div class="detail-label">Assignment</div>
+            <div class="detail-text">Present to Karl: your business name, your one-sentence pitch, your price, your payment policy, your cold outreach results, your Notion workspace, and your revenue total including stranger sales. Karl gives the verdict.</div>
+            <div class="detail-label">Expected time</div>
+            <div class="detail-text">60-minute final call</div>
+            <div class="detail-label">Complete when</div>
+            <div class="complete-pill">The verdict is in. You are an M-E CEO — or Karl activates the guarantee. Either way, you do not leave empty-handed.</div>
+            <div class="detail-label">The Win</div>
+            <div class="detail-text">👑 Financial — KSh 5,000 from strangers. The whole quest complete.</div>
+          </div>
+        </div>
+        <div class="day-time">60 min</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- VALUE EQUATION -->
+<section id="value">
+  <div class="section-eyebrow">05 — The Value Equation</div>
+  <h2 class="section-title">The offer, audited</h2>
+  <p class="section-lead">Alex Hormozi's Value Equation: Value = (Dream Outcome × Perceived Likelihood of Achievement) ÷ (Time Delay × Effort &amp; Sacrifice). Every intentional decision in this product was made against this formula.</p>
+
+  <div class="value-eq-hero">
+    <div class="formula">Value = (<span>Dream Outcome × Likelihood</span>) ÷ (Time Delay × Effort)</div>
+    <div class="elevator-pitch">"I help side hustle hobbyists who've been going in circles finally know what they're doing and where they're going — through a 30-day done-with-you system — without being handed a course and left alone — in 30 days. And if it doesn't work, you get your money back."</div>
+  </div>
+
+  <div class="ve-grid">
+    <div class="ve-card">
+      <div class="ve-card-header">
+        <div class="ve-fraction top">↑ Top of fraction — make it bigger</div>
+        <div class="ve-var-name">Dream Outcome</div>
+        <div class="ve-score">
+          <div class="score-bar"><div class="score-fill" style="width:90%"></div></div>
+          <div class="score-num">9/10</div>
+        </div>
+      </div>
+      <div class="ve-card-body">
+        <div class="ve-detail"><strong>The identity shift:</strong> "I finally know what I'm doing and where I'm going."</div>
+        <div class="ve-detail"><strong>The financial proof:</strong> KSh 5,000 from complete strangers online. Specific, believable, and meaningful — not life-changing, which is exactly why it's credible.</div>
+        <div class="ve-detail"><strong>Why it works:</strong> The outcome dismantles the hobbyist's deepest structural problem — they only sell to people who know them. The stranger sale is the proof the business is real.</div>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+          <div class="detail-label" style="margin-bottom:6px">Day 30 proof points</div>
+          <div class="ve-bullet"><div class="dot"></div>Named, branded business identity</div>
+          <div class="ve-bullet"><div class="dot"></div>Written offer — what, who, what it costs</div>
+          <div class="ve-bullet"><div class="dot"></div>Price defended without apologising</div>
+          <div class="ve-bullet"><div class="dot"></div>Payment policy signed by a client</div>
+          <div class="ve-bullet"><div class="dot"></div>Active Instagram and TikTok</div>
+          <div class="ve-bullet"><div class="dot"></div>Notion workspace as business OS</div>
+          <div class="ve-bullet"><div class="dot"></div>KSh 5,000 from strangers</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ve-card">
+      <div class="ve-card-header">
+        <div class="ve-fraction top">↑ Top of fraction — make it bigger</div>
+        <div class="ve-var-name">Perceived Likelihood</div>
+        <div class="ve-score">
+          <div class="score-bar"><div class="score-fill" style="width:70%"></div></div>
+          <div class="score-num">7/10</div>
+        </div>
+      </div>
+      <div class="ve-card-body">
+        <div class="ve-detail"><strong>The guarantee:</strong> Full money-back if the client completes every session and doesn't make KSh 5,000 from strangers by Day 30. Risk is entirely on Karl.</div>
+        <div class="ve-detail"><strong>The mechanism:</strong> Daily calls in Week 1, WhatsApp open throughout. Done-with-you signals Karl is present — this is not another tutorial abandoned halfway through.</div>
+        <div class="ve-detail"><strong>Karl's origin story:</strong> KSh 78,000 lost to a programme that handed tutorials and disappeared. The M-E CEO System is the product that should have existed instead. Used at Stage 3 awareness — solution comparison — not Stage 1.</div>
+        <div class="ve-detail"><strong>Live proof:</strong> Jane's Day 2 message — "It confronted me to have a deep look into the business. I had to fight the feeling of feeling stuck." Raw and current beats smooth and retrospective.</div>
+        <div style="margin-top:10px;padding:10px 12px;background:var(--gold-light);border-radius:8px;border-left:3px solid var(--gold)">
+          <div style="font-size:12px;color:var(--gold-dark);font-weight:600;margin-bottom:4px">What moves this to 10/10</div>
+          <div style="font-size:13px;color:rgba(12,12,12,0.7)">One complete client transformation with a documented Day 30 result. The guarantee bridges the gap until that exists.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ve-card">
+      <div class="ve-card-header">
+        <div class="ve-fraction bottom">↓ Bottom of fraction — push it down</div>
+        <div class="ve-var-name">Time Delay</div>
+        <div class="ve-score">
+          <div class="score-bar"><div class="score-fill" style="width:80%"></div></div>
+          <div class="score-num">8/10</div>
+        </div>
+      </div>
+      <div class="ve-card-body">
+        <div class="ve-detail"><strong>Total duration:</strong> 30 days — short enough to commit to, long enough to produce something real.</div>
+        <div class="ve-detail"><strong>The early win problem solved:</strong> People quit in the gap between paying and feeling results. Four milestone wins prevent that gap from ever getting too wide.</div>
+        <div style="margin-top:12px">
+          <div class="ve-bullet"><div class="dot"></div><div><strong>Day 1 — Emotional win:</strong> Relief. "Your chaos is data, not failure."</div></div>
+          <div class="ve-bullet"><div class="dot"></div><div><strong>Day 3 — Identity win:</strong> The Blank Conquest. The business is named. It now exists.</div></div>
+          <div class="ve-bullet"><div class="dot"></div><div><strong>Day 7 — Clarity win:</strong> The Vision Conquest. Can explain, price, and sell the business.</div></div>
+          <div class="ve-bullet"><div class="dot"></div><div><strong>Day 30 — Financial win:</strong> The M-E CEO Conquest. KSh 5,000 from strangers.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ve-card">
+      <div class="ve-card-header">
+        <div class="ve-fraction bottom">↓ Bottom of fraction — push it down</div>
+        <div class="ve-var-name">Effort &amp; Sacrifice</div>
+        <div class="ve-score">
+          <div class="score-bar"><div class="score-fill" style="width:70%"></div></div>
+          <div class="score-num">7/10</div>
+        </div>
+      </div>
+      <div class="ve-card-body">
+        <div class="ve-detail"><strong>The intensity stays.</strong> The discomfort is the mechanism, not a side effect. Jane felt stuck on Day 2 because the system asked her to look honestly at her business. That stays.</div>
+        <div class="ve-detail"><strong>The friction is removed.</strong> Every Notion assignment has a time estimate and a definition of what "done" looks like. The client always knows exactly what is being asked and how long it should take.</div>
+        <div class="ve-detail"><strong>The reframe in the marketing:</strong></div>
+        <div style="background:var(--ink);border-radius:8px;padding:12px 14px;margin-top:4px">
+          <div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:15px;color:#F6F3EE;line-height:1.6">"This will be the most honest 30 days your business has ever had. That honesty is what makes it work. And Karl is with you every single day."</div>
+        </div>
+        <div class="ve-detail" style="margin-top:12px"><strong>The safety net:</strong> Daily Week 1 calls mean no one sits alone in discomfort long enough to quit. WhatsApp means that if they hit a wall between calls, there is a human to reach.</div>
+      </div>
+    </div>
+
+    <div class="guarantee-box" style="grid-column:1/-1">
+      <div class="guarantee-icon">🛡️</div>
+      <div>
+        <div class="guarantee-title">The Money-Back Guarantee</div>
+        <div class="guarantee-text">If you complete every session, do every assignment, and show up to every call — and you do not make your first KSh 5,000 from strangers by Day 30 — you get your money back in full. The risk is entirely on Karl. The client has nothing to lose by trying. This is the single most powerful credibility tool available before testimonials exist.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Marketing FM</div>
+  <div class="footer-sub">M-E CEO System · Product Document · 2026</div>
+</footer>
+
+<script>
+function toggleWeek(id){
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+function toggleDay(el){
+  el.classList.toggle('open');
+}
+// Open week 1 by default
+document.getElementById('week1').classList.add('open');
+</script>
+</body>
+</html>
